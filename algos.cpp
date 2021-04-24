@@ -1,7 +1,8 @@
 #include <stdint.h>
 #include <stdio.h>      
 #include <stdlib.h>
-#include <time.h>    
+#include <time.h>  
+#include <math.h>   
 
 #define MAX_ITER 25000
 
@@ -184,8 +185,57 @@ uint64_t hill_climbing(uint64_t* nums, int* start, int n, bool is_seq){
 
 }
 
+// Cooling Schedule
+double cooling_schedule(int iter){
+	// 10^10(0.8)^⌊iter/300⌋ 
+	return pow(10,10)*pow(0.8, iter/300);
+}
+
 //Simulated Anealing
-uint64_t simulated_anealing();
+uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
+	int* cur_s = (int*) malloc(n*sizeof(int));
+	for(int i=0; i<n; i++){
+		cur_s[i] = start[i];
+	}
+	uint64_t cur_residue;
+
+	if (is_seq){
+		uint64_t cur_residue = seq_residue(nums, cur_s, n);
+		for(int i =0; i<MAX_ITER; i++){
+			int* neighbor = sequence_neighbor(cur_s, n);
+			uint64_t neighbor_residue = seq_residue(nums, neighbor, n); 
+			double cut_off = exp((int64_t) (cur_residue - neighbor_residue) / cooling_schedule(i));
+			if(neighbor_residue<cur_residue|| 
+				rand()/RAND_MAX <cut_off){
+				cur_residue = neighbor_residue;
+				free(cur_s);
+				cur_s = neighbor;
+			}
+			else{
+				free(neighbor);
+			}
+		}
+	}
+	else{
+		uint64_t cur_residue = parti_residue(nums, cur_s, n);
+		for(int i =0; i<MAX_ITER; i++){
+			int* neighbor = partition_neighbor(cur_s, n);
+			uint64_t neighbor_residue = parti_residue(nums, neighbor, n); 
+			double cut_off = exp((int64_t) (cur_residue - neighbor_residue) / cooling_schedule(i));
+			if(neighbor_residue<cur_residue|| 
+				rand()/RAND_MAX <cut_off){
+				cur_residue = neighbor_residue;
+				free(cur_s);
+				cur_s = neighbor;
+			}
+			else{
+				free(neighbor);
+			}
+		}
+	}
+	
+	return cur_residue;
+}
 
 int main(int argc, char const *argv[])
 {
