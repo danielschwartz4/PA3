@@ -6,7 +6,7 @@ all: kk
 kk: algos.o kk.o
 	$(CC) algos.o kk.o -o kk
 
-main: main.co
+main: main.co 
 	$(CC) main.o -o main
 
 algos: algos.o
@@ -19,6 +19,9 @@ kk.o: kk.cpp
 
 algos.o: algos.cpp
 		$(CC) $(CFLAGS) algos.cpp
+
+tests.o: tests.cpp
+		$(CC) $(CFLAGS) tests.cpp
 clean: 
 	rm *.o kk
 
