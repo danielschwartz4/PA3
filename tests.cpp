@@ -8,10 +8,11 @@
 
 
 
-int main(void) {
-  uint64_t nums[] = {10, 8,7 ,6,5};
+int main(int argc, char const *argv[])
+{
+	uint64_t nums[] = {10, 8,7 ,6,5};
 	int s[] = {0,1,1,3,4};
 	parti_residue(nums, s, 5);
-  return 0;
+	return 0;
 }
 

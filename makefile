@@ -12,6 +12,9 @@ main: main.co
 algos: algos.o
 		$(CC) algos.o -o algos
 
+tests: tests.o
+		$(CC) tests.o -o tests
+
 main.o: main.cpp
 		$(CC) $(CFLAGS) main.cpp
 kk.o: kk.cpp
