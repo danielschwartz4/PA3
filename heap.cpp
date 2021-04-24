@@ -93,6 +93,13 @@ uint64_t heap_pop(maxheap* heap){
 	return root;
 }
 
+void print_heap(maxheap* heap){
+	printf("heap: ");
+	for (int i=0; i<heap->heap_size; i++){
+		printf("%llu\t", heap->arr[i]);
+	}
+	printf("\n");
+}
 
 
 

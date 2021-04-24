@@ -1,12 +1,11 @@
 #include "algos.hh"
+#include "heap.hh"
 #include <iostream>
 #include <stdint.h>
 #include <stdio.h>      
 #include <stdlib.h>
 #include <time.h>    
 #include <queue>
-
-
 
 int main(void) {
   	uint64_t nums[] = {10, 8,7 ,6,5};

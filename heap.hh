@@ -35,4 +35,6 @@ void heap_push(maxheap* heap, uint64_t k);
 uint64_t heap_top(maxheap* heap);
 
 uint64_t heap_pop(maxheap* heap);
+
+void print_heap(maxheap* heap);
 #endif
