@@ -150,7 +150,6 @@ int kk(std::priority_queue < int > pqueue){
   return kk(pqueue);
 }
 
-
 //Calculate residual from standard sequence representation
 uint64_t seq_residue(uint64_t* nums, int* s, int n){
 	int64_t res = 0;
@@ -312,10 +311,3 @@ uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
 	return cur_residue;
 }
 
-int main(int argc, char const *argv[])
-{
-	uint64_t nums[] = {10, 8,7 ,6,5};
-	int s[] = {0,1,1,3,4};
-	parti_residue(nums, s, 5);
-	return 0;
-}

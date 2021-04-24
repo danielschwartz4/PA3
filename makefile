@@ -6,8 +6,11 @@ all: kk
 kk: algos.o kk.o
 	$(CC) algos.o kk.o -o kk
 
-main: main.co 
+main: main.o 
 	$(CC) main.o -o main
+
+tests: tests.o algos.o
+	$(CC) tests.o algos.o -o tests
 
 algos: algos.o
 		$(CC) algos.o -o algos
