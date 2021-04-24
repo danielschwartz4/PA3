@@ -2,7 +2,9 @@
 #include <stdio.h>      
 #include <stdlib.h>
 #include <time.h>  
-#include <math.h>   
+#include <math.h>     
+#include <iostream>
+#include <queue>
 
 #define MAX_ITER 25000
 
@@ -74,8 +76,80 @@ int* partition_neighbor(int* sequence, int n){
 	return neighbor;
 }
 
+uint64_t max(uint64_t* nums, int n){
+  uint64_t curr_max = nums[0];
+  for(int i=1; i<n; i++){
+		if(nums[i] > curr_max){
+      curr_max = nums[i];
+    }
+	}
+  return curr_max;
+}
+
+void print_pqueue(std::priority_queue < int > pqueue){
+  while (!pqueue.empty()) {
+    std::cout << ' ' << pqueue.top();
+    pqueue.pop();
+  }
+}
+
+bool second_is_zero(std::priority_queue < int > pqueue){
+  pqueue.pop();
+  if(pqueue.top() == 0){
+    return true;
+  }
+  return false;
+}
+
+std::priority_queue < int > nums_to_pqueue(uint64_t* nums, int n){
+  std::priority_queue < int > pqueue;
+  for(int i=0; i<n; i++){
+		pqueue.push(nums[i]);
+	}
+  return pqueue;
+}
+
 //Karmarkar-Karp algorithm, use max-heap to sort the nums 
-uint64_t kk(uint64_t* nums, int n);
+uint64_t iter_kk(uint64_t* nums, int n){
+  // new empty queue
+  std::priority_queue < int > pqueue = nums_to_pqueue(nums, 5);
+  print_pqueue(pqueue);
+
+  std::cout << "\n";
+
+  while(!second_is_zero(pqueue)){
+    int largest = pqueue.top();
+    pqueue.pop();
+    int second_largest = pqueue.top();
+    pqueue.pop();
+    int diff = std::abs(largest - second_largest);
+    pqueue.push(diff);
+    pqueue.push(0);
+    print_pqueue(pqueue);
+    std::cout << "\n";
+  }
+  std::cout << pqueue.top() << "\n";
+  return pqueue.top();
+}
+
+
+int kk(std::priority_queue < int > pqueue){
+  print_pqueue(pqueue);
+  std::cout << "\n";
+  if(second_is_zero(pqueue)){
+    return pqueue.top();
+  }
+
+  int largest = pqueue.top();
+  pqueue.pop();
+  int second_largest = pqueue.top();
+  pqueue.pop();
+  int diff = std::abs(largest - second_largest);
+  pqueue.push(diff);
+  pqueue.push(0);
+  return kk(pqueue);
+}
+
 
 //Calculate residual from standard sequence representation
 uint64_t seq_residue(uint64_t* nums, int* s, int n){
@@ -95,7 +169,8 @@ uint64_t parti_residue(uint64_t* nums, int* s, int n){
 	for(int i = 0; i<n; i++){
 		p[s[i]] += nums[i];
 	}
-	uint64_t res = kk(p, n);
+  	std::priority_queue < int > pqueue = nums_to_pqueue(p, n);
+	uint64_t res = kk(pqueue);
 	free(p);
 	
 	return res;
@@ -200,7 +275,7 @@ uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
 	uint64_t cur_residue;
 
 	if (is_seq){
-		uint64_t cur_residue = seq_residue(nums, cur_s, n);
+		cur_residue = seq_residue(nums, cur_s, n);
 		for(int i =0; i<MAX_ITER; i++){
 			int* neighbor = sequence_neighbor(cur_s, n);
 			uint64_t neighbor_residue = seq_residue(nums, neighbor, n); 
@@ -217,7 +292,7 @@ uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
 		}
 	}
 	else{
-		uint64_t cur_residue = parti_residue(nums, cur_s, n);
+		cur_residue = parti_residue(nums, cur_s, n);
 		for(int i =0; i<MAX_ITER; i++){
 			int* neighbor = partition_neighbor(cur_s, n);
 			uint64_t neighbor_residue = parti_residue(nums, neighbor, n); 
@@ -242,6 +317,5 @@ int main(int argc, char const *argv[])
 	uint64_t nums[] = {10, 8,7 ,6,5};
 	int s[] = {0,1,1,3,4};
 	parti_residue(nums, s, 5);
-
 	return 0;
 }
