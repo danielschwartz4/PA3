@@ -16,15 +16,19 @@ uint64_t* read_file_to_arr(std::ifstream &infile, int n){
 };
 
 int main(int argc, char const *argv[])
-{
-	std::ifstream infile(argv[1]);
+{	
+	int flag =  atoi(argv[1]);
+	(void) flag;
+	int code = atoi(argv[2]);
+	std::ifstream infile(argv[3]);
 
 	//read input file
 	uint64_t* nums = read_file_to_arr(infile, 100);
 
+	if (code==0){
+		printf("%llu\n", kk(nums, 100));
+	}
 	
-	//compute kk
-	printf("%llu\n", kk(nums, 100));
 
 	free(nums);
 	return 0;
