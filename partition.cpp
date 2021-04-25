@@ -15,8 +15,7 @@ uint64_t* read_file_to_arr(std::ifstream &infile, int n){
 	return nums;
 };
 
-int main(int argc, char const *argv[])
-{	
+int main(int argc, char const *argv[]){	
 	int flag =  atoi(argv[1]);
 	(void) flag;
 	int code = atoi(argv[2]);
@@ -29,7 +28,6 @@ int main(int argc, char const *argv[])
 		printf("%llu\n", kk(nums, 100));
 	}
 	
-
 	free(nums);
 	return 0;
 }
