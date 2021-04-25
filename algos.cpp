@@ -11,11 +11,11 @@
 
 int* random_sequence(int n){
 	int* res= (int *) malloc(n*sizeof(int));
-	srand (time(NULL));
+	// srand (time(0));
 
 	for (int i =0; i<n;i++){
-		int r = rand()%10+1;
-		if (r <=5){
+		float r = (float) rand()/RAND_MAX;
+		if (r <=0.5){
 			res[i]=-1;
 		}
 		else{
@@ -27,7 +27,7 @@ int* random_sequence(int n){
 
 int* random_parition(int n){
 	int* res = (int*) malloc(n*sizeof(int));
-	srand (time(NULL));
+	// srand (time(NULL));
 
 	for (int i =0; i<n;i++){
 		res[i] = rand()%n;
@@ -41,7 +41,7 @@ int* sequence_neighbor(int* sequence, int n){
 		neighbor[i] = sequence[i];
 	}
 
-	srand (time(NULL));
+	// srand (time(NULL));
 	// randomly flip one element
 	int i = rand() %n;
 	neighbor[i] = -1*neighbor[i];
@@ -65,7 +65,7 @@ int* partition_neighbor(int* sequence, int n){
 	}
 
 	// randomly pick one to change
-	srand (time(NULL));
+	// srand (time(NULL));
 	int i = rand()%n;
 	int j = rand()%n;
 
@@ -102,13 +102,26 @@ bool second_is_zero(std::priority_queue < int > pqueue){
   return false;
 }
 
-std::priority_queue < int > nums_to_pqueue(uint64_t* nums, int n){
-  std::priority_queue < int > pqueue;
+std::priority_queue < uint64_t > nums_to_pqueue(uint64_t* nums, int n){
+  std::priority_queue < uint64_t > pqueue;
   for(int i=0; i<n; i++){
 		pqueue.push(nums[i]);
 	}
   return pqueue;
 }
+
+// uint64_t kk(uint64_t* nums, int n){
+// 	std::priority_queue < uint64_t > pqueue = nums_to_pqueue(nums, n);
+
+// 	while(pqueue.size()>1){
+// 		uint64_t largest = (uint64_t) pqueue.top();
+// 		pqueue.pop();
+// 		uint64_t second_largest = (uint64_t) pqueue.top();
+// 		pqueue.pop();
+// 		pqueue.push(largest- second_largest);
+// 	}
+// 	return pqueue.top();
+// }
 
 uint64_t kk(uint64_t* nums, int n){
 	maxheap* heap = malloc_heap(n);
@@ -116,18 +129,17 @@ uint64_t kk(uint64_t* nums, int n){
 	for (int i = 0; i<n; i++){
 		heap_push(heap, nums[i]);
 	}
-	// print_heap(heap);
 
 	while (heap->heap_size>1){
-		uint64_t largest = heap_pop(heap);
-		uint64_t second_largest = heap_pop(heap);
+		uint64_t largest = heap_top(heap);
+    heap_pop(heap);
+    uint64_t second_largest = heap_top(heap);
+    heap_pop(heap);
 		heap_push(heap, largest - second_largest);
-    print_heap(heap);
 	}
 
 	uint64_t res = heap_pop(heap);
 	free_heap(heap);
-  // std::cout << res << "\n";
 	return res;
 }
 

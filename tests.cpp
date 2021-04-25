@@ -102,14 +102,14 @@ void test_heap(){
 
 
 int main(void) {
-	test_heap();
-	printf("test heap done\n");
+	// test_heap();
+	// printf("test heap done\n");
 
   // heap_tests();
 	// printf("test heap done\n");
 
-  // kk_tests();
-  // printf("kk tests done\n");
+  kk_tests();
+  printf("kk tests done\n");
 
   // residue_tests();
   // printf("residue tests done\n");
