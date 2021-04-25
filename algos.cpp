@@ -69,7 +69,7 @@ int* partition_neighbor(int* sequence, int n){
 	int i = rand()%n;
 	int j = rand()%n;
 
-	while (j!= neighbor[i]){
+	while (j== neighbor[i]){
 		j = rand()%n;
 	}
 	neighbor[i] = j;
@@ -156,7 +156,7 @@ uint64_t parti_residue(uint64_t* nums, int* s, int n){
 
 //Repeated Random
 uint64_t repeated_random(uint64_t* nums, int* start, int n, bool is_seq){
-	int * cur_s = (int*) malloc(n*sizeof(uint64_t));
+	int * cur_s = (int*) malloc(n*sizeof(int));
 	for (int i=0; i<n; i++){
 		cur_s[i] = start[i];
 	}
@@ -181,7 +181,7 @@ uint64_t repeated_random(uint64_t* nums, int* start, int n, bool is_seq){
 		for(int i =0; i<= MAX_ITER; i++){
 			cur_residue = parti_residue(nums, cur_s, n);
 			int* random_s = random_parition(n);
-			uint64_t new_residue = seq_residue(nums, random_s, n);
+			uint64_t new_residue = parti_residue(nums, random_s, n);
 			if (new_residue<cur_residue){
 				cur_residue = new_residue;
 				free(cur_s);
@@ -198,7 +198,7 @@ uint64_t repeated_random(uint64_t* nums, int* start, int n, bool is_seq){
 
 //Hill Climbing
 uint64_t hill_climbing(uint64_t* nums, int* start, int n, bool is_seq){
-	int * cur_s = (int*) malloc(n*sizeof(uint64_t));
+	int * cur_s = (int*) malloc(n*sizeof(int));
 	for (int i=0; i<n; i++){
 		cur_s[i] = start[i];
 	}
