@@ -11,7 +11,7 @@
 
 int* random_sequence(int n){
 	int* res= (int *) malloc(n*sizeof(int));
-	// srand (time(NULL));
+	// srand (time(0));
 
 	for (int i =0; i<n;i++){
 		float r = (float) rand()/RAND_MAX;
@@ -27,7 +27,7 @@ int* random_sequence(int n){
 
 int* random_parition(int n){
 	int* res = (int*) malloc(n*sizeof(int));
-	srand (time(NULL));
+	// srand (time(NULL));
 
 	for (int i =0; i<n;i++){
 		res[i] = rand()%n;

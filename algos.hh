@@ -35,9 +35,9 @@ uint64_t parti_residue(uint64_t* nums, int* s, int n);
 uint64_t repeated_random(uint64_t* nums, int* start, int n, bool is_seq);
 
 //Hill Climbing
-uint64_t hill_climbing();
+uint64_t hill_climbing(uint64_t* nums, int* start, int n, bool is_seq);
 
 //Simulated Anealing
-uint64_t simulated_anealing();
+uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq);
 
 #endif

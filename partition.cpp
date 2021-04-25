@@ -51,8 +51,26 @@ int main(int argc, char const *argv[]){
 		int* start = random_sequence(n);
 		printf("%" PRIu64 "\n", repeated_random(nums, start, n, true));
 	}
-	
-	
+	if (code==2){
+		int* start = random_sequence(n);
+		printf("%" PRIu64 "\n", hill_climbing(nums, start, n, true));
+	}
+	if (code==3){
+		int* start = random_sequence(n);
+		printf("%" PRIu64 "\n", simulated_anealing(nums, start, n, true));
+	}
+	if (code==11){
+		int* start = random_parition(n);
+		printf("%" PRIu64 "\n", repeated_random(nums, start, n, false));
+	}
+	if (code==12){
+		int* start = random_parition(n);
+		printf("%" PRIu64 "\n", hill_climbing(nums, start, n, false));
+	}
+	if (code==13){
+		int* start = random_parition(n);
+		printf("%" PRIu64 "\n", simulated_anealing(nums, start, n, false));
+	}
 	free(nums);
 	return 0;
 }
