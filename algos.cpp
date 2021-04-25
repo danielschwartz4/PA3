@@ -132,9 +132,9 @@ uint64_t kk(uint64_t* nums, int n){
 
 	while (heap->heap_size>1){
 		uint64_t largest = heap_top(heap);
-    heap_pop(heap);
-    uint64_t second_largest = heap_top(heap);
-    heap_pop(heap);
+	    heap_pop(heap);
+	    uint64_t second_largest = heap_top(heap);
+	    heap_pop(heap);
 		heap_push(heap, largest - second_largest);
 	}
 
@@ -265,7 +265,7 @@ uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
 		cur_s[i] = start[i];
 	}
 	uint64_t cur_residue;
-
+	srand(time(0));
 	if (is_seq){
 		cur_residue = seq_residue(nums, cur_s, n);
 		for(int i =0; i<MAX_ITER; i++){
