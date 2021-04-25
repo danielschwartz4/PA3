@@ -12,20 +12,22 @@ uint64_t* read_file_to_arr(std::ifstream &infile, int n){
 		infile>>val;
 		nums[i] = val;
 	}
+	// std::cout << nums[5] << "\n";
 	return nums;
 };
 
 int main(int argc, char const *argv[])
 {
 	std::ifstream infile(argv[1]);
-
-	//read input file
+	// read_file_to_arr(infile, 100);
+	// //read input file
 	uint64_t* nums = read_file_to_arr(infile, 100);
-
 	
-	//compute kk
-	printf("%llu\n", kk(nums, 100));
-
+	// //compute kk
+	// printf("%llu\n", kk(nums, 100));
+	int res = kk(nums, 100);
 	free(nums);
-	return 0;
+	std::cout << res << "\n";
+	return res;
+	// return 0;
 }
