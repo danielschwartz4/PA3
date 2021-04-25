@@ -55,12 +55,12 @@ void kk_tests(){
 	assert (kk(nums1, size1) == 1);
   std::cout << "good" << "\n";
 
-  uint64_t nums2[] = {1, 2, 3, 4};
+  uint64_t nums2[] = {50, 2, 4, 8, 16, 32, 60};
   int size2 = sizeof(nums2)/sizeof(nums2[0]);
 	assert (kk(nums2, size2) == 0);
   std::cout << "good" << "\n";
 
-  uint64_t nums3[] = {10, 8, 7, 6, 5};
+  uint64_t nums3[] = {5, 6, 7, 8, 10};
   int size3 = sizeof(nums3)/sizeof(nums3[0]);
 	assert (kk(nums3, size3) == 2);
   std::cout << "good" << "\n";
@@ -69,6 +69,15 @@ void kk_tests(){
   int size4 = sizeof(nums4)/sizeof(nums4[0]);
 	assert (kk(nums4, size4) == 1);
   std::cout << "good" << "\n";
+}
+
+void residue_tests(){
+  uint64_t nums0[] = {10, 8, 7, 6, 5};
+  int s0[] = {1, 2, 3, 4, 5};
+  int size0 = sizeof(nums0)/sizeof(nums0[0]);
+	// assert (kk(nums0, size0) == 0);
+  std::cout << parti_residue(nums0, s0, size0) << "\n";
+
 }
 
 
@@ -84,6 +93,7 @@ void test_heap(){
 	int i =0;
 	while (heap->heap_size>0){
 		assert(heap_pop(heap)==arr[i]);
+    print_heap(heap);
 		++i;
 	}
 	free_heap(heap);
@@ -95,11 +105,14 @@ int main(void) {
 	test_heap();
 	printf("test heap done\n");
 
-  heap_tests();
-	printf("test heap done\n");
+  // heap_tests();
+	// printf("test heap done\n");
 
-  kk_tests();
-  printf("kk tests done\n");
+  // kk_tests();
+  // printf("kk tests done\n");
+
+  // residue_tests();
+  // printf("residue tests done\n");
   
   return 0;
 }
