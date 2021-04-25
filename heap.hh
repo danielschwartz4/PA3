@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include<climits>
+#include <inttypes.h>
 #include "heap.hh"
 using namespace std;
 

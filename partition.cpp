@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdint.h>
+#include <inttypes.h>
 #include "algos.hh"
 
 //read file function
@@ -36,19 +37,19 @@ int main(int argc, char const *argv[]){
 	int flag =  atoi(argv[1]);
 	(void) flag;
 	int code = atoi(argv[2]);
-	// std::ifstream infile(argv[3]);
-	char* file = (char*) argv[3];
-
-	//read input file
-	// uint64_t* nums = read_file_to_arr(infile, 100);
-	uint64_t* nums = load_file_to_nums(file, 100);
+	std::ifstream infile(argv[3]);
+	// char* file = (char*) argv[3];
 	int n = 100;
+	//read input file
+	uint64_t* nums = read_file_to_arr(infile, n);
+	// uint64_t* nums = load_file_to_nums(file, n);
+	
 	if (code==0){
-		printf("%llu\n", kk(nums, n));
+		printf("%" PRIu64 "\n", kk(nums, n));
 	}
 	if (code==1){
 		int* start = random_sequence(n);
-		printf("%llu\n", repeated_random(nums, start, n, true));
+		printf("%" PRIu64 "\n", repeated_random(nums, start, n, true));
 	}
 	
 	

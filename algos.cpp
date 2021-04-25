@@ -11,11 +11,11 @@
 
 int* random_sequence(int n){
 	int* res= (int *) malloc(n*sizeof(int));
-	srand (time(NULL));
+	// srand (time(NULL));
 
 	for (int i =0; i<n;i++){
-		int r = rand()%10+1;
-		if (r <=5){
+		float r = (float) rand()/RAND_MAX;
+		if (r <=0.5){
 			res[i]=-1;
 		}
 		else{
@@ -41,7 +41,7 @@ int* sequence_neighbor(int* sequence, int n){
 		neighbor[i] = sequence[i];
 	}
 
-	srand (time(NULL));
+	// srand (time(NULL));
 	// randomly flip one element
 	int i = rand() %n;
 	neighbor[i] = -1*neighbor[i];
@@ -65,7 +65,7 @@ int* partition_neighbor(int* sequence, int n){
 	}
 
 	// randomly pick one to change
-	srand (time(NULL));
+	// srand (time(NULL));
 	int i = rand()%n;
 	int j = rand()%n;
 
