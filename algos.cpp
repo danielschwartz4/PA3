@@ -102,8 +102,8 @@ bool second_is_zero(std::priority_queue < int > pqueue){
   return false;
 }
 
-std::priority_queue < int > nums_to_pqueue(uint64_t* nums, int n){
-  std::priority_queue < int > pqueue;
+std::priority_queue < uint64_t > nums_to_pqueue(uint64_t* nums, int n){
+  std::priority_queue < uint64_t > pqueue;
   for(int i=0; i<n; i++){
 		pqueue.push(nums[i]);
 	}
@@ -111,22 +111,36 @@ std::priority_queue < int > nums_to_pqueue(uint64_t* nums, int n){
 }
 
 uint64_t kk(uint64_t* nums, int n){
-	maxheap* heap = malloc_heap(n);
+	std::priority_queue < uint64_t > pqueue = nums_to_pqueue(nums, n);
 
-	for (int i = 0; i<n; i++){
-		heap_push(heap, nums[i]);
+	while(pqueue.size()>1){
+		uint64_t largest = (uint64_t) pqueue.top();
+		pqueue.pop();
+		uint64_t second_largest = (uint64_t) pqueue.top();
+		pqueue.pop();
+		pqueue.push(largest- second_largest);
 	}
-
-	while (heap->heap_size>1){
-		uint64_t largest = heap_pop(heap);
-		uint64_t second_largest = heap_pop(heap);
-		heap_push(heap, largest - second_largest);
-	}
-
-	uint64_t res = heap_pop(heap);
-	free_heap(heap);
-	return res;
+	return pqueue.top();
 }
+
+
+// uint64_t kk(uint64_t* nums, int n){
+// 	maxheap* heap = malloc_heap(n);
+
+// 	for (int i = 0; i<n; i++){
+// 		heap_push(heap, nums[i]);
+// 	}
+
+// 	while (heap->heap_size>1){
+// 		uint64_t largest = heap_pop(heap);
+// 		uint64_t second_largest = heap_pop(heap);
+// 		heap_push(heap, largest - second_largest);
+// 	}
+
+// 	uint64_t res = heap_pop(heap);
+// 	free_heap(heap);
+// 	return res;
+// }
 
 //Calculate residual from standard sequence representation
 uint64_t seq_residue(uint64_t* nums, int* s, int n){

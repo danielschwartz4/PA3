@@ -16,33 +16,15 @@ uint64_t* read_file_to_arr(std::ifstream &infile, int n){
 	return nums;
 };
 
-uint64_t* load_file_to_nums(char* file, int n){
-	FILE* f = fopen(file, "r");
-
-    // Input numbers into array nums
-    uint64_t* nums = (uint64_t*) malloc(sizeof(uint64_t) * n);
-    char* line = NULL;
-    size_t read, len, i = 0;
-    while ((read = getline(&line, &len, f)) != -1) {
-        nums[i] = strtoull(line, NULL, 10);
-        i++;
-    }
-    
-    fclose(f);
-    return nums;
-
-}
-
 int main(int argc, char const *argv[]){	
 	int flag =  atoi(argv[1]);
 	(void) flag;
 	int code = atoi(argv[2]);
 	std::ifstream infile(argv[3]);
-	// char* file = (char*) argv[3];
+	
 	int n = 100;
 	//read input file
 	uint64_t* nums = read_file_to_arr(infile, n);
-	// uint64_t* nums = load_file_to_nums(file, n);
 	
 	if (code==0){
 		printf("%" PRIu64 "\n", kk(nums, n));
