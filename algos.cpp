@@ -116,18 +116,15 @@ uint64_t kk(uint64_t* nums, int n){
 	for (int i = 0; i<n; i++){
 		heap_push(heap, nums[i]);
 	}
-	// print_heap(heap);
 
 	while (heap->heap_size>1){
 		uint64_t largest = heap_pop(heap);
 		uint64_t second_largest = heap_pop(heap);
 		heap_push(heap, largest - second_largest);
-    // print_heap(heap);
 	}
 
 	uint64_t res = heap_pop(heap);
 	free_heap(heap);
-  // std::cout << res << "\n";
 	return res;
 }
 

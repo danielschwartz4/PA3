@@ -32,7 +32,7 @@ uint64_t seq_residual(uint64_t* nums, int* s, int n);
 uint64_t parti_residue(uint64_t* nums, int* s, int n);
 
 //Repeated Random
-uint64_t repeated_random();
+uint64_t repeated_random(uint64_t* nums, int* start, int n, bool is_seq);
 
 //Hill Climbing
 uint64_t hill_climbing();
