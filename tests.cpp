@@ -1,5 +1,6 @@
 #include "algos.hh"
 #include "heap.hh"
+#include <assert.h>  
 #include <iostream>
 #include <stdint.h>
 #include <stdio.h>      
@@ -68,9 +69,33 @@ void kk_tests(){
 }
 
 
+void test_heap(){
+	int n = 3;
+	maxheap* heap=malloc_heap(n);
+	heap_push(heap,56);
+	heap_push(heap, 65);
+	heap_push(heap, 24);
+	assert(heap->heap_size==3);
+	
+	uint64_t arr[] = {65, 56,24};
+	int i =0;
+	while (heap->heap_size>0){
+		assert(heap_pop(heap)==arr[i]);
+		++i;
+	}
+}
+
+
 int main(void) {
+	test_heap();
+	printf("test heap done\n");
+
   heap_tests();
-  // kk_tests();
+	printf("test heap done\n");
+
+  kk_tests();
+  printf("kk tests done\n");
+  
   return 0;
 }
 
