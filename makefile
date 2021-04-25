@@ -15,8 +15,8 @@ tests: tests.o algos.o heap.o
 algos: algos.o heap.o
 		$(CC) algos.o heap.o -o algos
 
-tests: tests.o
-		$(CC) tests.o -o tests
+tests: tests.o algos.o heap.o
+		$(CC) tests.o algos.o heap.o -o tests
 
 main.o: main.cpp
 		$(CC) $(CFLAGS) main.cpp

@@ -3,3 +3,6 @@
 .vscode
 .vscode/*
 .DS_Store
+tests
+tests.o
+algos.o
