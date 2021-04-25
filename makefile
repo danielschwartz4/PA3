@@ -6,11 +6,14 @@ all: kk
 kk: algos.o kk.o
 	$(CC) algos.o kk.o -o kk
 
-main: main.co 
+main: main.o 
 	$(CC) main.o -o main
 
-algos: algos.o
-		$(CC) algos.o -o algos
+tests: tests.o algos.o heap.o
+	$(CC) tests.o algos.o heap.o -o tests
+
+algos: algos.o heap.o
+		$(CC) algos.o heap.o -o algos
 
 tests: tests.o
 		$(CC) tests.o -o tests
@@ -25,8 +28,11 @@ algos.o: algos.cpp
 
 tests.o: tests.cpp
 		$(CC) $(CFLAGS) tests.cpp
+
+heap.o: heap.cpp
+		$(CC) $(CFLAGS) heap.cpp
 clean: 
-	rm *.o kk
+	rm *.o
 
 
 

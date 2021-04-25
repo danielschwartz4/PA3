@@ -5,6 +5,7 @@
 #include <math.h>     
 #include <iostream>
 #include <queue>
+#include "heap.hh"
 
 #define MAX_ITER 25000
 
@@ -109,47 +110,24 @@ std::priority_queue < int > nums_to_pqueue(uint64_t* nums, int n){
   return pqueue;
 }
 
-//Karmarkar-Karp algorithm, use max-heap to sort the nums 
-uint64_t iter_kk(uint64_t* nums, int n){
-  // new empty queue
-  std::priority_queue < int > pqueue = nums_to_pqueue(nums, 5);
-  print_pqueue(pqueue);
+uint64_t kk(uint64_t* nums, int n){
+	maxheap* heap = malloc_heap(n);
 
-  std::cout << "\n";
+	for (int i = 0; i<n; i++){
+		heap_push(heap, nums[i]);
+	}
+	print_heap(heap);
 
-  while(!second_is_zero(pqueue)){
-    int largest = pqueue.top();
-    pqueue.pop();
-    int second_largest = pqueue.top();
-    pqueue.pop();
-    int diff = std::abs(largest - second_largest);
-    pqueue.push(diff);
-    pqueue.push(0);
-    print_pqueue(pqueue);
-    std::cout << "\n";
-  }
-  std::cout << pqueue.top() << "\n";
-  return pqueue.top();
+	while (heap->heap_size>1){
+		uint64_t largest = heap_pop(heap);
+		uint64_t second_largest = heap_pop(heap);
+		heap_push(heap, largest - second_largest);
+	}
+
+	uint64_t res = heap_pop(heap);
+	free_heap(heap);
+	return res;
 }
-
-
-int kk(std::priority_queue < int > pqueue){
-  print_pqueue(pqueue);
-  std::cout << "\n";
-  if(second_is_zero(pqueue)){
-    return pqueue.top();
-  }
-
-  int largest = pqueue.top();
-  pqueue.pop();
-  int second_largest = pqueue.top();
-  pqueue.pop();
-  int diff = std::abs(largest - second_largest);
-  pqueue.push(diff);
-  pqueue.push(0);
-  return kk(pqueue);
-}
-
 
 //Calculate residual from standard sequence representation
 uint64_t seq_residue(uint64_t* nums, int* s, int n){
@@ -169,8 +147,8 @@ uint64_t parti_residue(uint64_t* nums, int* s, int n){
 	for(int i = 0; i<n; i++){
 		p[s[i]] += nums[i];
 	}
-  	std::priority_queue < int > pqueue = nums_to_pqueue(p, n);
-	uint64_t res = kk(pqueue);
+  	
+	uint64_t res = kk(p, n);
 	free(p);
 	
 	return res;
@@ -312,10 +290,3 @@ uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
 	return cur_residue;
 }
 
-int main(int argc, char const *argv[])
-{
-	uint64_t nums[] = {10, 8,7 ,6,5};
-	int s[] = {0,1,1,3,4};
-	parti_residue(nums, s, 5);
-	return 0;
-}
