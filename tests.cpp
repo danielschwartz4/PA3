@@ -9,10 +9,10 @@
 #include <queue>
 #include <assert.h> 
 
-int get_size(uint64_t nums[]){
-  int size = sizeof(nums)/sizeof(nums[0]);
-  return size;
-}
+// uint64_t get_size(uint64_t nums[]){
+//   uint64_t size = sizeof(nums)/sizeof(nums[0]);
+//   return size;
+// }
 
 void heap_tests(){
   uint64_t nums0[] = {0, 0, 0, 0, 0, 0};
@@ -22,6 +22,7 @@ void heap_tests(){
 		heap_push(heap0, nums0[i]);
 	}
   print_heap(heap0);
+  free_heap(heap0);
 
   uint64_t nums1[] = {10, 8, 7, 6, 5};
   int size1 = sizeof(nums1)/sizeof(nums1[0]);
@@ -30,6 +31,7 @@ void heap_tests(){
 		heap_push(heap1, nums1[i]);
 	}
   print_heap(heap1);
+  free_heap(heap1);
 
   uint64_t nums2[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
   int size2 = sizeof(nums2)/sizeof(nums2[0]);
@@ -38,6 +40,7 @@ void heap_tests(){
 		heap_push(heap2, nums2[i]);
 	}
   print_heap(heap2);
+  free_heap(heap2);
 }
 
 
@@ -83,6 +86,7 @@ void test_heap(){
 		assert(heap_pop(heap)==arr[i]);
 		++i;
 	}
+	free_heap(heap);
 }
 
 
