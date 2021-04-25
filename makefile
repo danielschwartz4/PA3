@@ -3,8 +3,8 @@ CFLAGS=-c -Wall
 
 all: kk
 
-kk: algos.o kk.o
-	$(CC) algos.o kk.o -o kk
+kk: algos.o kk.o heap.o
+	$(CC) algos.o kk.o heap.o -o kk
 
 main: main.o 
 	$(CC) main.o -o main

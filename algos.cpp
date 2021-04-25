@@ -116,7 +116,7 @@ uint64_t kk(uint64_t* nums, int n){
 	for (int i = 0; i<n; i++){
 		heap_push(heap, nums[i]);
 	}
-	print_heap(heap);
+	// print_heap(heap);
 
 	while (heap->heap_size>1){
 		uint64_t largest = heap_pop(heap);
