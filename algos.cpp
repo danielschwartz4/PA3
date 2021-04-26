@@ -77,6 +77,12 @@ int* partition_neighbor(int* sequence, int n){
 	return neighbor;
 }
 
+void copy_arr(int* source, int* dest, int n){
+	for (int i=0; i<n; i++){
+		dest[i] = source[i];
+	}
+}
+
 uint64_t max(uint64_t* nums, int n){
   uint64_t curr_max = nums[0];
   for(int i=1; i<n; i++){
@@ -109,19 +115,6 @@ std::priority_queue < uint64_t > nums_to_pqueue(uint64_t* nums, int n){
 	}
   return pqueue;
 }
-
-// uint64_t kk(uint64_t* nums, int n){
-// 	std::priority_queue < uint64_t > pqueue = nums_to_pqueue(nums, n);
-
-// 	while(pqueue.size()>1){
-// 		uint64_t largest = (uint64_t) pqueue.top();
-// 		pqueue.pop();
-// 		uint64_t second_largest = (uint64_t) pqueue.top();
-// 		pqueue.pop();
-// 		pqueue.push(largest- second_largest);
-// 	}
-// 	return pqueue.top();
-// }
 
 uint64_t kk(uint64_t* nums, int n){
 	maxheap* heap = malloc_heap(n);
@@ -182,13 +175,14 @@ uint64_t repeated_random(uint64_t* nums, int* start, int n, bool is_seq){
 			uint64_t new_residue = seq_residue(nums, random_s, n);
 			if (new_residue<cur_residue){
 				cur_residue = new_residue;
-				free(cur_s);
-				cur_s = random_s;
-
+				// free(cur_s);
+				// cur_s = random_s;
+				copy_arr(random_s, cur_s, n);
 			}
-			else{
-				free(random_s);
-			}
+			// else{
+			// 	free(random_s);
+			// }
+			free(random_s);
 		}	
 	}
 	else{
