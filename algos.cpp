@@ -207,6 +207,7 @@ uint64_t repeated_random(uint64_t* nums, int* start, int n, bool is_seq){
 			}
 		}
 	}
+	free(cur_s);
 	return cur_residue;
 }
 
@@ -248,6 +249,8 @@ uint64_t hill_climbing(uint64_t* nums, int* start, int n, bool is_seq){
 			}
 		}
 	}
+
+	free(cur_s);
 	return cur_residue;
 
 }
@@ -264,16 +267,24 @@ uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
 	for(int i=0; i<n; i++){
 		cur_s[i] = start[i];
 	}
+
+	int* prime_s = (int*) malloc(n*sizeof(int));
+	for(int i=0; i<n; i++){
+		prime_s[i] = start[i];
+	}
+
 	uint64_t cur_residue;
-	srand(time(0));
+	uint64_t prime_residule;
+
 	if (is_seq){
 		cur_residue = seq_residue(nums, cur_s, n);
+		prime_residule = seq_residue(nums, prime_s, n);
 		for(int i =0; i<MAX_ITER; i++){
 			int* neighbor = sequence_neighbor(cur_s, n);
 			uint64_t neighbor_residue = seq_residue(nums, neighbor, n); 
 			double cut_off = exp((int64_t) (cur_residue - neighbor_residue) / cooling_schedule(i));
 			if(neighbor_residue<cur_residue|| 
-				rand()/RAND_MAX <cut_off){
+				rand()/RAND_MAX <=cut_off){
 				cur_residue = neighbor_residue;
 				free(cur_s);
 				cur_s = neighbor;
@@ -281,10 +292,18 @@ uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
 			else{
 				free(neighbor);
 			}
+
+			if (cur_residue<prime_residule){
+				prime_residule = cur_residue;
+				for(int i=0; i<n; i++){
+					prime_s[i] = cur_s[i];
+				}
+			}
 		}
 	}
 	else{
 		cur_residue = parti_residue(nums, cur_s, n);
+		prime_residule = parti_residue(nums, prime_s, n);
 		for(int i =0; i<MAX_ITER; i++){
 			int* neighbor = partition_neighbor(cur_s, n);
 			uint64_t neighbor_residue = parti_residue(nums, neighbor, n); 
@@ -298,9 +317,18 @@ uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
 			else{
 				free(neighbor);
 			}
+
+			if (cur_residue<prime_residule){
+				prime_residule = cur_residue;
+				for(int i=0; i<n; i++){
+					prime_s[i] = cur_s[i];
+				}
+			}
 		}
 	}
 	
+	free(cur_s);
+	free(prime_s);
 	return cur_residue;
 }
 
