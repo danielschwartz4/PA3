@@ -329,6 +329,6 @@ uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
 	
 	free(cur_s);
 	free(prime_s);
-	return cur_residue;
+	return prime_residule;
 }
 
