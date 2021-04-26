@@ -102,5 +102,4 @@ void print_heap(maxheap* heap){
 	printf("\n");
 }
 
-// void main():
 

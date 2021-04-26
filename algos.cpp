@@ -83,39 +83,6 @@ void copy_arr(int* source, int* dest, int n){
 	}
 }
 
-uint64_t max(uint64_t* nums, int n){
-  uint64_t curr_max = nums[0];
-  for(int i=1; i<n; i++){
-		if(nums[i] > curr_max){
-      curr_max = nums[i];
-    }
-	}
-  return curr_max;
-}
-
-void print_pqueue(std::priority_queue < int > pqueue){
-  while (!pqueue.empty()) {
-    std::cout << ' ' << pqueue.top();
-    pqueue.pop();
-  }
-}
-
-bool second_is_zero(std::priority_queue < int > pqueue){
-  pqueue.pop();
-  if(pqueue.top() == 0){
-    return true;
-  }
-  return false;
-}
-
-std::priority_queue < uint64_t > nums_to_pqueue(uint64_t* nums, int n){
-  std::priority_queue < uint64_t > pqueue;
-  for(int i=0; i<n; i++){
-		pqueue.push(nums[i]);
-	}
-  return pqueue;
-}
-
 uint64_t kk(uint64_t* nums, int n){
 	maxheap* heap = malloc_heap(n);
 
@@ -175,13 +142,8 @@ uint64_t repeated_random(uint64_t* nums, int* start, int n, bool is_seq){
 			uint64_t new_residue = seq_residue(nums, random_s, n);
 			if (new_residue<cur_residue){
 				cur_residue = new_residue;
-				// free(cur_s);
-				// cur_s = random_s;
 				copy_arr(random_s, cur_s, n);
 			}
-			// else{
-			// 	free(random_s);
-			// }
 			free(random_s);
 		}	
 	}
@@ -192,13 +154,9 @@ uint64_t repeated_random(uint64_t* nums, int* start, int n, bool is_seq){
 			uint64_t new_residue = parti_residue(nums, random_s, n);
 			if (new_residue<cur_residue){
 				cur_residue = new_residue;
-				free(cur_s);
-				cur_s = random_s;
-
+				copy_arr(random_s, cur_s, n);
 			}
-			else{
-				free(random_s);
-			}
+			free(random_s);
 		}
 	}
 	free(cur_s);
@@ -220,12 +178,9 @@ uint64_t hill_climbing(uint64_t* nums, int* start, int n, bool is_seq){
 			uint64_t neighbor_residue = seq_residue(nums, neighbor, n);
 			if(neighbor_residue<cur_residue){
 				cur_residue = neighbor_residue;
-				free(cur_s);
-				cur_s = neighbor;
+				copy_arr(neighbor, cur_s, n);
 			}
-			else{
-				free(neighbor);
-			}
+			free(neighbor);
 		}
 	}
 	else{
@@ -235,12 +190,9 @@ uint64_t hill_climbing(uint64_t* nums, int* start, int n, bool is_seq){
 			uint64_t neighbor_residue = parti_residue(nums, neighbor, n);
 			if(neighbor_residue<cur_residue){
 				cur_residue = neighbor_residue;
-				free(cur_s);
-				cur_s = neighbor;
+				copy_arr(neighbor, cur_s, n);
 			}
-			else{
-				free(neighbor);
-			}
+			free(neighbor);
 		}
 	}
 
@@ -280,12 +232,9 @@ uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
 			if(neighbor_residue<cur_residue|| 
 				rand()/RAND_MAX <=cut_off){
 				cur_residue = neighbor_residue;
-				free(cur_s);
-				cur_s = neighbor;
+				copy_arr(neighbor, cur_s, n);
 			}
-			else{
-				free(neighbor);
-			}
+			free(neighbor);
 
 			if (cur_residue<prime_residule){
 				prime_residule = cur_residue;
@@ -303,14 +252,11 @@ uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
 			uint64_t neighbor_residue = parti_residue(nums, neighbor, n); 
 			double cut_off = exp((int64_t) (cur_residue - neighbor_residue) / cooling_schedule(i));
 			if(neighbor_residue<cur_residue|| 
-				rand()/RAND_MAX <cut_off){
+				rand()/RAND_MAX <=cut_off){
 				cur_residue = neighbor_residue;
-				free(cur_s);
-				cur_s = neighbor;
+				copy_arr(neighbor, cur_s, n);
 			}
-			else{
-				free(neighbor);
-			}
+			free(neighbor);
 
 			if (cur_residue<prime_residule){
 				prime_residule = cur_residue;
