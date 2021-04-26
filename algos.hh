@@ -27,7 +27,7 @@ uint64_t iter_kk(uint64_t* nums, int n);
 
 uint64_t kk(uint64_t* nums, int n);
 
-uint64_t seq_residual(uint64_t* nums, int* s, int n);
+uint64_t seq_residue(uint64_t* nums, int* s, int n);
  
 uint64_t parti_residue(uint64_t* nums, int* s, int n);
 

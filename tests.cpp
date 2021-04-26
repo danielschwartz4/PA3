@@ -71,15 +71,49 @@ void kk_tests(){
   std::cout << "good" << "\n";
 }
 
-void residue_tests(){
+void residue_seq_tests(){
   uint64_t nums0[] = {10, 8, 7, 6, 5};
-  int s0[] = {1, 2, 3, 4, 5};
+  int* s0 = random_sequence(5);
   int size0 = sizeof(nums0)/sizeof(nums0[0]);
-	// assert (kk(nums0, size0) == 0);
-  std::cout << parti_residue(nums0, s0, size0) << "\n";
+  std::cout <<  seq_residue(nums0, s0, size0) << "\n";
 
+  uint64_t nums1[] = {0, 0, 0, 0, 0, 0};
+  int* s1 = random_sequence(5);
+  int size1 = sizeof(nums1)/sizeof(nums1[0]);
+  std::cout <<  seq_residue(nums1, s1, size1) << "\n";
+
+  uint64_t nums2[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+  int* s2 = random_sequence(5);
+  int size2 = sizeof(nums2)/sizeof(nums2[0]);
+  std::cout <<  seq_residue(nums2, s2, size2) << "\n";
+
+  uint64_t nums3[] = {1};
+  int* s3 = random_sequence(5);
+  int size3 = sizeof(nums3)/sizeof(nums3[0]);
+  std::cout <<  seq_residue(nums3, s3, size3) << "\n";
 }
 
+void residue_part_tests(){
+  uint64_t nums0[] = {10, 8, 7, 6, 5};
+  int* s0 = random_sequence(5);
+  int size0 = sizeof(nums0)/sizeof(nums0[0]);
+  std::cout <<  parti_residue(nums0, s0, size0) << "\n";
+
+  uint64_t nums1[] = {0, 0, 0, 0, 0, 0};
+  int* s1 = random_sequence(5);
+  int size1 = sizeof(nums1)/sizeof(nums1[0]);
+  std::cout <<  parti_residue(nums1, s1, size1) << "\n";
+
+  uint64_t nums2[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+  int* s2 = random_sequence(5);
+  int size2 = sizeof(nums2)/sizeof(nums2[0]);
+  std::cout <<  parti_residue(nums2, s2, size2) << "\n";
+
+  uint64_t nums3[] = {1};
+  int* s3 = random_sequence(5);
+  int size3 = sizeof(nums3)/sizeof(nums3[0]);
+  std::cout <<  parti_residue(nums3, s3, size3) << "\n";
+}
 
 void test_heap(){
 	int n = 3;
@@ -108,11 +142,15 @@ int main(void) {
   // heap_tests();
 	// printf("test heap done\n");
 
-  kk_tests();
-  printf("kk tests done\n");
+  // kk_tests();
+  // printf("kk tests done\n");
 
-  // residue_tests();
-  // printf("residue tests done\n");
+  // residue_seq_tests();
+  // printf("residue seq tests done\n");
+
+  residue_part_tests();
+  printf("residue part tests done\n");
+
   
   return 0;
 }
