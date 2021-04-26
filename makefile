@@ -6,8 +6,8 @@ all: partition
 partition: algos.o partition.o heap.o
 	$(CC) algos.o partition.o heap.o -o partition
 
-main: main.o 
-	$(CC) main.o -o main
+experiment: experiment.o algos.o heap.o
+	$(CC) experiment.o algos.o heap.o -o experiment
 
 tests: tests.o algos.o heap.o
 	$(CC) tests.o algos.o heap.o -o tests
@@ -15,8 +15,8 @@ tests: tests.o algos.o heap.o
 algos: algos.o heap.o
 		$(CC) algos.o heap.o -o algos
 
-main.o: main.cpp
-		$(CC) $(CFLAGS) main.cpp
+experiment.o: experiment.cpp
+		$(CC) $(CFLAGS) experiment.cpp
 
 partition.o: partition.cpp
 		$(CC) $(CFLAGS) partition.cpp
