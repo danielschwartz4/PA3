@@ -15,16 +15,6 @@ int* sequence_neighbor(int* sequence, int n);
 
 int* partition_neighbor(int* sequence, int n);
 
-uint64_t max(uint64_t* nums, int n);
-
-void print_pqueue(std::priority_queue < int > pqueue);
-
-bool second_is_zero(std::priority_queue < int > pqueue);
-
-std::priority_queue < int > nums_to_pqueue(uint64_t* nums, int n);
-
-uint64_t iter_kk(uint64_t* nums, int n);
-
 uint64_t kk(uint64_t* nums, int n);
 
 uint64_t seq_residue(uint64_t* nums, int* s, int n);

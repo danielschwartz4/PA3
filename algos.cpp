@@ -77,51 +77,11 @@ int* partition_neighbor(int* sequence, int n){
 	return neighbor;
 }
 
-uint64_t max(uint64_t* nums, int n){
-  uint64_t curr_max = nums[0];
-  for(int i=1; i<n; i++){
-		if(nums[i] > curr_max){
-      curr_max = nums[i];
-    }
+void copy_arr(int* source, int* dest, int n){
+	for (int i=0; i<n; i++){
+		dest[i] = source[i];
 	}
-  return curr_max;
 }
-
-void print_pqueue(std::priority_queue < int > pqueue){
-  while (!pqueue.empty()) {
-    std::cout << ' ' << pqueue.top();
-    pqueue.pop();
-  }
-}
-
-bool second_is_zero(std::priority_queue < int > pqueue){
-  pqueue.pop();
-  if(pqueue.top() == 0){
-    return true;
-  }
-  return false;
-}
-
-std::priority_queue < uint64_t > nums_to_pqueue(uint64_t* nums, int n){
-  std::priority_queue < uint64_t > pqueue;
-  for(int i=0; i<n; i++){
-		pqueue.push(nums[i]);
-	}
-  return pqueue;
-}
-
-// uint64_t kk(uint64_t* nums, int n){
-// 	std::priority_queue < uint64_t > pqueue = nums_to_pqueue(nums, n);
-
-// 	while(pqueue.size()>1){
-// 		uint64_t largest = (uint64_t) pqueue.top();
-// 		pqueue.pop();
-// 		uint64_t second_largest = (uint64_t) pqueue.top();
-// 		pqueue.pop();
-// 		pqueue.push(largest- second_largest);
-// 	}
-// 	return pqueue.top();
-// }
 
 uint64_t kk(uint64_t* nums, int n){
 	maxheap* heap = malloc_heap(n);
@@ -132,9 +92,9 @@ uint64_t kk(uint64_t* nums, int n){
 
 	while (heap->heap_size>1){
 		uint64_t largest = heap_top(heap);
-    heap_pop(heap);
-    uint64_t second_largest = heap_top(heap);
-    heap_pop(heap);
+	    heap_pop(heap);
+	    uint64_t second_largest = heap_top(heap);
+	    heap_pop(heap);
 		heap_push(heap, largest - second_largest);
 	}
 
@@ -182,13 +142,9 @@ uint64_t repeated_random(uint64_t* nums, int* start, int n, bool is_seq){
 			uint64_t new_residue = seq_residue(nums, random_s, n);
 			if (new_residue<cur_residue){
 				cur_residue = new_residue;
-				free(cur_s);
-				cur_s = random_s;
-
+				copy_arr(random_s, cur_s, n);
 			}
-			else{
-				free(random_s);
-			}
+			free(random_s);
 		}	
 	}
 	else{
@@ -198,15 +154,12 @@ uint64_t repeated_random(uint64_t* nums, int* start, int n, bool is_seq){
 			uint64_t new_residue = parti_residue(nums, random_s, n);
 			if (new_residue<cur_residue){
 				cur_residue = new_residue;
-				free(cur_s);
-				cur_s = random_s;
-
+				copy_arr(random_s, cur_s, n);
 			}
-			else{
-				free(random_s);
-			}
+			free(random_s);
 		}
 	}
+	free(cur_s);
 	return cur_residue;
 }
 
@@ -225,12 +178,9 @@ uint64_t hill_climbing(uint64_t* nums, int* start, int n, bool is_seq){
 			uint64_t neighbor_residue = seq_residue(nums, neighbor, n);
 			if(neighbor_residue<cur_residue){
 				cur_residue = neighbor_residue;
-				free(cur_s);
-				cur_s = neighbor;
+				copy_arr(neighbor, cur_s, n);
 			}
-			else{
-				free(neighbor);
-			}
+			free(neighbor);
 		}
 	}
 	else{
@@ -240,14 +190,13 @@ uint64_t hill_climbing(uint64_t* nums, int* start, int n, bool is_seq){
 			uint64_t neighbor_residue = parti_residue(nums, neighbor, n);
 			if(neighbor_residue<cur_residue){
 				cur_residue = neighbor_residue;
-				free(cur_s);
-				cur_s = neighbor;
+				copy_arr(neighbor, cur_s, n);
 			}
-			else{
-				free(neighbor);
-			}
+			free(neighbor);
 		}
 	}
+
+	free(cur_s);
 	return cur_residue;
 
 }
@@ -264,43 +213,62 @@ uint64_t simulated_anealing(uint64_t* nums, int* start, int n, bool is_seq){
 	for(int i=0; i<n; i++){
 		cur_s[i] = start[i];
 	}
+
+	int* prime_s = (int*) malloc(n*sizeof(int));
+	for(int i=0; i<n; i++){
+		prime_s[i] = start[i];
+	}
+
 	uint64_t cur_residue;
+	uint64_t prime_residule;
 
 	if (is_seq){
 		cur_residue = seq_residue(nums, cur_s, n);
+		prime_residule = seq_residue(nums, prime_s, n);
 		for(int i =0; i<MAX_ITER; i++){
 			int* neighbor = sequence_neighbor(cur_s, n);
 			uint64_t neighbor_residue = seq_residue(nums, neighbor, n); 
 			double cut_off = exp((int64_t) (cur_residue - neighbor_residue) / cooling_schedule(i));
 			if(neighbor_residue<cur_residue|| 
-				rand()/RAND_MAX <cut_off){
+				rand()/RAND_MAX <=cut_off){
 				cur_residue = neighbor_residue;
-				free(cur_s);
-				cur_s = neighbor;
+				copy_arr(neighbor, cur_s, n);
 			}
-			else{
-				free(neighbor);
+			free(neighbor);
+
+			if (cur_residue<prime_residule){
+				prime_residule = cur_residue;
+				for(int i=0; i<n; i++){
+					prime_s[i] = cur_s[i];
+				}
 			}
 		}
 	}
 	else{
 		cur_residue = parti_residue(nums, cur_s, n);
+		prime_residule = parti_residue(nums, prime_s, n);
 		for(int i =0; i<MAX_ITER; i++){
 			int* neighbor = partition_neighbor(cur_s, n);
 			uint64_t neighbor_residue = parti_residue(nums, neighbor, n); 
 			double cut_off = exp((int64_t) (cur_residue - neighbor_residue) / cooling_schedule(i));
 			if(neighbor_residue<cur_residue|| 
-				rand()/RAND_MAX <cut_off){
+				rand()/RAND_MAX <=cut_off){
 				cur_residue = neighbor_residue;
-				free(cur_s);
-				cur_s = neighbor;
+				copy_arr(neighbor, cur_s, n);
 			}
-			else{
-				free(neighbor);
+			free(neighbor);
+
+			if (cur_residue<prime_residule){
+				prime_residule = cur_residue;
+				for(int i=0; i<n; i++){
+					prime_s[i] = cur_s[i];
+				}
 			}
 		}
 	}
 	
-	return cur_residue;
+	free(cur_s);
+	free(prime_s);
+	return prime_residule;
 }
 
