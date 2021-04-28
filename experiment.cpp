@@ -24,6 +24,7 @@ int main(int argc, char const *argv[])
 	int code = atoi(argv[1]);
 	int trails = atoi(argv[2]);
 	int n = 100;
+	float avg_time = 0;
 	printf("residue\ttime_spent\n");
 	for (int i=0; i<trails; i++){
 		uint64_t* nums = get_nums(n);
@@ -32,8 +33,9 @@ int main(int argc, char const *argv[])
 			uint64_t res = kk(nums, n);
 			end_time = clock();
 			double time_spent = (double) (end_time-start_time)/ CLOCKS_PER_SEC *1000;
-			printf("%" PRIu64 ", ", res);
-			// printf("%" PRIu64 "\t%f", res, time_spent);
+			// printf("%" PRIu64 ", ", time_spent);
+			avg_time += time_spent;
+			printf("%" PRIu64 "\t%f", res, time_spent);
 		}
 		if (code==1){
 			int* start = random_sequence(n);
@@ -41,8 +43,9 @@ int main(int argc, char const *argv[])
 			uint64_t res = repeated_random(nums, start, n, true);
 			end_time = clock();
 			double time_spent = (double) (end_time-start_time)/ CLOCKS_PER_SEC *1000;
-			printf("%" PRIu64 ", ", res);
-			// printf("%" PRIu64 "\t%f\n", res, time_spent);
+			// printf("%" PRIu64 ", ", time_spent);
+			avg_time += time_spent;
+			printf("%" PRIu64 "\t%f\n", res, time_spent);
 		}
 		if (code==2){
 			int* start = random_sequence(n);
@@ -50,8 +53,9 @@ int main(int argc, char const *argv[])
 			uint64_t res = hill_climbing(nums, start, n, true);
 			end_time = clock();
 			double time_spent = (double) (end_time-start_time)/ CLOCKS_PER_SEC *1000;
-			printf("%" PRIu64 ", ", res);
-			// printf("%" PRIu64 "\t%f\n", res, time_spent);
+			// printf("%" PRIu64 ", ", time_spent);
+			avg_time += time_spent;
+			printf("%" PRIu64 "\t%f\n", res, time_spent);
 		}
 		if (code==3){
 			int* start = random_sequence(n);
@@ -59,8 +63,9 @@ int main(int argc, char const *argv[])
 			uint64_t res = simulated_anealing(nums, start, n, true);
 			end_time = clock();
 			double time_spent = (double) (end_time-start_time)/ CLOCKS_PER_SEC *1000;
-			printf("%" PRIu64 ", ", res);
-			// printf("%" PRIu64 "\t%f\n", res, time_spent);
+			// printf("%" PRIu64 ", ", time_spent);
+			avg_time += time_spent;
+			printf("%" PRIu64 "\t%f\n", res, time_spent);
 		}
 		if (code==11){
 			int* start = random_parition(n);
@@ -68,8 +73,9 @@ int main(int argc, char const *argv[])
 			uint64_t res = repeated_random(nums, start, n, false);
 			end_time = clock();
 			double time_spent = (double) (end_time-start_time)/ CLOCKS_PER_SEC *1000;
-			printf("%" PRIu64 ", ", res);
-			// printf("%" PRIu64 "\t%f\n", res, time_spent);
+			// printf("%" PRIu64 ", ", time_spent);
+			avg_time += time_spent;
+			printf("%" PRIu64 "\t%f\n", res, time_spent);
 		}
 		if (code==12){
 			int* start = random_parition(n);
@@ -77,8 +83,9 @@ int main(int argc, char const *argv[])
 			uint64_t res = hill_climbing(nums, start, n, false);
 			end_time = clock();
 			double time_spent = (double) (end_time-start_time)/ CLOCKS_PER_SEC *1000;
-			printf("%" PRIu64 ", ", res);
-			// printf("%" PRIu64 "\t%f\n", res, time_spent);
+			// printf("%" PRIu64 ", ", time_spent);
+			avg_time += time_spent;
+			printf("%" PRIu64 "\t%f\n", res, time_spent);
 		}
 		if (code==13){
 			int* start = random_parition(n);
@@ -86,10 +93,13 @@ int main(int argc, char const *argv[])
 			uint64_t res = simulated_anealing(nums, start, n, false);
 			end_time = clock();
 			double time_spent = (double) (end_time-start_time)/ CLOCKS_PER_SEC *1000;
-			printf("%" PRIu64 ", ", res);
-			// printf("%" PRIu64 "\t%f\n", res, time_spent);
+			// printf("%" PRIu64 ", ", time_spent);
+			avg_time += time_spent;
+			printf("%" PRIu64 "\t%f\n", res, time_spent);
 		}
 		free(nums);
 	}
+	std::cout << "\n";
+	std::cout << avg_time/100 << "\n";
 	return 0;
 } 
